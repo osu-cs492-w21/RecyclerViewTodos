@@ -1,5 +1,6 @@
 package com.example.android.recyclerviewtodos;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -29,12 +30,15 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
     @NonNull
     @Override
     public TodoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View itemView = inflater.inflate(R.layout.todo_list_item, parent, false);
+        return new TodoViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TodoViewHolder holder, int position) {
-
+        String todo = this.todoList.get(this.todoList.size() - position - 1);
+        holder.bind(todo);
     }
 
     class TodoViewHolder extends RecyclerView.ViewHolder {
