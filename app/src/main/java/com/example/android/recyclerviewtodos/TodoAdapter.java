@@ -71,5 +71,11 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
         void bind(String todo) {
             this.todoTextTV.setText(todo);
         }
+
+        public void removeFromList() {
+            int position = getAdapterPosition();
+            todoList.remove(todoList.size() - position - 1);
+            notifyItemRemoved(position);
+        }
     }
 }

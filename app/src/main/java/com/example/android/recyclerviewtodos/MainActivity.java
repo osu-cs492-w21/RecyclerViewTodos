@@ -1,7 +1,9 @@
 package com.example.android.recyclerviewtodos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +43,21 @@ public class MainActivity extends AppCompatActivity
         this.todoListRV.setLayoutManager(new LinearLayoutManager(this));
         this.todoListRV.setHasFixedSize(true);
         this.todoListRV.setItemAnimator(new DefaultItemAnimator());
+
+        ItemTouchHelper.SimpleCallback simpleCallback =
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                ((TodoAdapter.TodoViewHolder)viewHolder).removeFromList();
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(this.todoListRV);
 
         Button addTodoBtn = findViewById(R.id.btn_add_todo);
         addTodoBtn.setOnClickListener(new View.OnClickListener() {
